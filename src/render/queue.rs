@@ -6,7 +6,7 @@ use bevy::pbr::{MeshPipelineKey, RenderMeshInstances};
 use bevy::prelude::*;
 use bevy::render::mesh::GpuMesh;
 use bevy::render::render_asset::RenderAssets;
-use bevy::render::render_phase::{DrawFunctions, ViewBinnedRenderPhases};
+use bevy::render::render_phase::{BinnedRenderPhaseType, DrawFunctions, ViewBinnedRenderPhases};
 use bevy::render::render_resource::{PipelineCache, SpecializedMeshPipelines};
 use bevy::render::view::ExtractedView;
 
@@ -79,12 +79,12 @@ pub(crate) fn queue_grass_buffers(
                 Opaque3dBinKey {
                     pipeline,
                     draw_function: draw_custom,
-                    asset_id: mesh_instance.mesh_asset_id,
+                    asset_id: mesh_instance.mesh_asset_id.into(),
                     material_bind_group_id: None,
                     lightmap_image: None,
                 },
                 entity,
-                false,
+                BinnedRenderPhaseType::BatchableMesh,
             );
         }
     }
